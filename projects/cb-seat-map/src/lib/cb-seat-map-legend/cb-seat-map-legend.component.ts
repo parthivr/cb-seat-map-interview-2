@@ -66,6 +66,22 @@ export class CbSeatMapLegendComponent implements OnInit {
     return null;
   }
 
+  getSeatDescription(seatType: any): string {
+    let description = '';
+
+    if (seatType === CbSeatTypeEnum.EM) {
+      description = this.cmsEvenMore.seat.description || 'Even More Space';
+    } else if (seatType === CbSeatTypeEnum.MINT) {
+      description = this.cmsMint.seat.description || 'Mint';
+    } else if (seatType === CbSeatTypeEnum.CORE) {
+      description = this.cmsCommonText.seat.description || 'Core';
+    } else {
+      description = 'Standard Seat';
+    }
+
+    return description;
+  }
+
   handleKeyPressEvent($event: KeyboardEvent, label: CbSeatTypeEnum): void {
     if ($event.code === JbEnums.KeyboardKey.Enter) {
       this.openLearnMorePanel(label);
