@@ -1,0 +1,60 @@
+@use '../internal/mixins.scss' as mixins;
+
+.rotate-svg {
+  transform: rotate(-90deg) scale(1.42) translateY(17px);
+}
+
+.form-control {
+  display: block;
+  margin-bottom: 16px;
+
+  label,
+  input {
+    display: block;
+  }
+
+  input {
+    box-sizing: border-box;
+    padding: 8px;
+    width: 100%;
+  }
+}
+
+.cb-seat-map {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  & > cb-seat-map-preview-legend {
+    margin-bottom: 1rem;
+  }
+
+  &__section-wrapper {
+    display: block;
+
+    // Preview mode - constrain to parent container
+    &--preview {
+      @include mixins.flex(
+        $align-items: center,
+        $direction: column,
+        $flex: 1,
+        $justify-content: center
+      );
+
+      overflow: hidden;
+      width: 100%;
+
+      cb-seat-map-section {
+        @include mixins.flex($align-items: center, $justify-content: center);
+
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    // Selection mode - existing behavior
+    &--selection {
+      display: block;
+    }
+  }
+}

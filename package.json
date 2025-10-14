@@ -1,0 +1,57 @@
+{
+  "name": "cb-seatmap-component",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "ng serve cb-seat-map-demo --hmr --open",
+    "build": "ng build cb-seat-map",
+    "generate-version": "genversion projects/cb-seat-map/src/lib/internal/package-version.const.ts --esm --semi --source projects/cb-seat-map",
+    "prerelease:dry-run": "cd projects/cb-seat-map && npm version patch",
+    "release:dry-run": "npm run generate-version && npm run build && cd dist/cb-seat-map && npm publish --dry-run",
+    "release:prod": "cd dist/cb-seat-map && npm publish",
+    "test": "ng test"
+  },
+  "private": true,
+  "engines": {
+    "node": "^16.14.0 || ^18.10.0",
+    "npm": ">=9.5.0"
+  },
+  "dependencies": {
+    "@angular/animations": "16.2.12",
+    "@angular/cdk": "16.2.14",
+    "@angular/common": "16.2.12",
+    "@angular/compiler": "16.2.12",
+    "@angular/core": "16.2.12",
+    "@angular/elements": "16.2.12",
+    "@angular/forms": "16.2.12",
+    "@angular/platform-browser": "16.2.12",
+    "@angular/platform-browser-dynamic": "16.2.12",
+    "@angular/platform-server": "16.2.12",
+    "@angular/router": "16.2.12",
+    "canvas-confetti": "1.5.1",
+    "date-fns": "^2.28.0",
+    "jb-component-library": "29.0.0",
+    "ramda": "0.30.1",
+    "rxjs": "^7.5.2",
+    "tslib": "^2.0.0",
+    "zone.js": "~0.13.1"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "16.2.16",
+    "@angular/cli": "16.2.16",
+    "@angular/compiler-cli": "16.2.12",
+    "@cb-client-libraries/common-interfaces": "^0.0.37",
+    "@cb-client-libraries/seat-service-interfaces": "^0.0.2",
+    "@cb-client-libraries/shopping-cart-interfaces": "^0.0.48",
+    "@types/jasmine": "~4.0.0",
+    "genversion": "^3.2.0",
+    "jasmine-core": "~4.3.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.0.0",
+    "ng-packagr": "16.2.3",
+    "type-fest": "4.41.0",
+    "typescript": "5.1.6"
+  }
+}

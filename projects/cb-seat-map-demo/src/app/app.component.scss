@@ -1,0 +1,54 @@
+%flex-align-items-center {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cb-seat-map-demo {
+  &__toolbar {
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+
+    &-content {
+      @extend %flex-align-items-center;
+
+      color: white;
+      justify-content: space-between;
+    }
+
+    &-title-button {
+      // Remove default min-height and padding (set by jbButton) as they make
+      // the toolbar too tall
+      &.jb-button-minimal.jb-button-large {
+        min-height: unset;
+        padding: 0;
+      }
+
+      &-content {
+        @extend %flex-align-items-center;
+
+        &-text {
+          // Offset for jbButton padding
+          padding-top: 1px;
+        }
+      }
+    }
+  }
+
+  &__seat-map {
+    height: calc(100vh - 3.5rem);
+    margin-top: 3.5rem;
+    overflow: auto;
+    width: 100vw;
+
+    &--preview {
+      border: 1px solid black;
+      height: 500px;
+      margin: 4rem;
+      width: 500px;
+    }
+  }
+}

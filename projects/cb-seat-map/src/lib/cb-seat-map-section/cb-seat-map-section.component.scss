@@ -1,0 +1,403 @@
+@use 'jb-component-library/styles/colors-variables.scss' as jb-colors;
+@use 'jb-component-library/styles/variables.scss' as jb-vars;
+
+/* Sticky header css */
+.seat-selection {
+  top: 56px;
+}
+/* covid alert message wrapper css */
+.distance-Intiative-info {
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  line-height: 16px;
+  max-width: 550px;
+  min-width: 500px;
+  top: calc(100vh - 310px);
+}
+
+/* dropdown overlay css added */
+.load-blue-screen {
+  place-items: center;
+  height: 100vh;
+  background: jb-colors.$royal-blue;
+  transition: top 1s;
+}
+
+/* padding only for seat-selection */
+.pt-seat-selection {
+  padding-top: 0;
+}
+
+/* seat slect wrapper css */
+.seat-select-wrapper {
+  background-color: jb-colors.$sky-blue;
+  /* seat map transform css added */
+  /* zoom item animations and transition css added */
+
+  .zoom-Item {
+    animation: zoom-out 1s ease-out forwards;
+    transition: all 0.5s ease-out;
+  }
+
+  /* Zoom out keys frame css added */
+  /* Zoom out animation */
+  @keyframes zoom-out {
+    /* 0, 50, 100 percentage transform and animation added */
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.25) translateX(-80px) translateY(80px);
+    }
+    100% {
+      transform: scale(1.3) translateX(-90px) translateY(100px);
+    }
+  }
+}
+
+/* seat selection animation added  */
+// @mixin seatMapAni($animate, $startX, $startY) {
+//   /* keyframes css added */
+//   @keyframes #{$animate} {
+//  /* 0 percentage transform and animation added */
+//     0% {
+//       transform: translate($startX, $startY) scale(0.4, 0.4);
+//       animation-timing-function: cubic-bezier(0.25, 0.025, 0.275, 0.09);
+//     }
+//  /* 100 percentage transform and animation added */
+//     100% {
+//       transform: translate(0%, 90%) scale(5.8, 4.8);
+//       animation-timing-function: cubic-bezier(0.175, 0.175, 1.675, 0.48);
+//     }
+//   }
+//  /* animation added forward for 2.5s */
+//   animation: $animate 2.5s ease forwards;
+// }
+// /* Seatmap animation for diff aircrafts */
+// /* seat map animation css added */
+// .seatMapA321-ns, .seatMapA321Mint-ns {
+//   @include seatMapAni(A321Animation, -90%, -75%);
+// }
+// /* seat map animation for LR aircraft css added */
+// .seatMapA321LR-ns {
+//   @include seatMapAni(A321Animation, -95%, -20%);
+// }
+// /* seat map animation css added */
+// .seatMapA220-ns, .seatMap220-ns {
+//   @include seatMapAni(A220Animation, -120%, -20%);
+// }
+// /* seat map animation css added */
+// .seatMapA320-ns {
+//   @include seatMapAni(A320Animation, -100%, -60%);
+// }
+// /* seat map animation css added */
+// .seatMapE190-ns {
+//   @include seatMapAni(E190Animation, -125%, -30%);
+// }
+
+/* Animation for seat map in small devices */
+@keyframes seatMapMobileAnimation {
+  /* 0 percentage transform and animation added */
+
+  0% {
+    transform: scale3d(0.5, 0.5, 0.5);
+    animation-timing-function: cubic-bezier(0.25, 0.025, 0.275, 0.09);
+  }
+  /* 100 percentage transform and animation added */
+
+  100% {
+    transform: scale3d(0.95, 0.95, 0.95);
+    animation-timing-function: cubic-bezier(0.175, 0.175, 1.675, 0.48);
+  }
+}
+/* media query for large screen */
+@media #{jb-vars.$breakpoint-large} {
+  /* price seat wrapper added */
+  .price-seat-wrapper {
+    max-width: 550px;
+    min-width: 500px;
+  }
+}
+
+/* media query for small screen */
+@media #{jb-vars.$breakpoint-small} {
+  /* min height and margin bottom added */
+  .seat-map-wrapper {
+    margin-bottom: 5rem;
+    margin-top: 5rem;
+    min-height: 25rem;
+    width: 100%;
+  }
+  /* seat map animation and width added */
+  .seat-map-animation-s {
+    width: 380px;
+    animation: seatMapMobileAnimation 2s ease forwards;
+  }
+}
+
+/* media query for large screen */
+@media only screen and (max-width: #{map-get(jb-vars.$breakpoints, 'medium')}) {
+  /* width left right margin price-seat-wrapper */
+  .price-seat-wrapper {
+    width: 95%;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+}
+
+/* disabled css pointer events */
+.disabled {
+  pointer-events: none;
+}
+
+/* media query css for firefox */
+@-moz-document url-prefix('') {
+  .jb-grid > * {
+    width: auto;
+  }
+}
+
+// scoping these styles to only be applied on this component
+jb-seat-selection {
+  .stacked-elements-container {
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 100%;
+
+    .stacked-child {
+      grid-area: 1/1/2/2;
+    }
+  }
+
+  // viewports greater than 1920 width will have columns at 50%
+  // to bring them closer to the left of the grid
+  @media only screen and (min-width: #{map-get(jb-vars.$breakpoints, 'large')}) {
+    .stacked-elements-container {
+      grid-template-columns: 50%;
+    }
+  }
+
+  .justify-items-center {
+    justify-items: center;
+  }
+
+  .aircraft-display-name-container {
+    height: 110px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 10px;
+  }
+
+  .aircraft-img {
+    // required to have a consistent base for dynamic aircraft scaling
+    height: 500px;
+    width: 500px;
+    max-width: unset;
+  }
+
+  .seat-select-wrapper .jb-grid .col-2-l {
+    min-width: 250px;
+  }
+
+  .seat-map-container {
+    // spacing at bottom of aircraft to account for
+    // action bar so no seats are behind it
+    margin-bottom: 124px;
+    // need min width to be as large as large aircraft width
+    // so that the seats arent squished and seats appear
+    // on a line below
+    min-width: 315px;
+  }
+
+  .cb-seats-container--vertical {
+    transform: translateX(129px) translateY(-30px);
+  }
+}
+
+.aircraft-image {
+  &--horizontal {
+    transform: rotate(-90deg) scale(1.7);
+  }
+
+  &--vertical {
+    transform: scale(4.3) translateY(25px);
+  }
+}
+
+@media only screen and (max-width: #{map-get(jb-vars.$breakpoints, 'medium')}) {
+  .cb-seat-map-legend-container {
+    display: none;
+  }
+}
+
+@media #{jb-vars.$breakpoint-small} {
+  .aircraft-image {
+    &--horizontal {
+      transform: none;
+    }
+
+    &--vertical {
+      transform: none;
+    }
+  }
+
+  .cb-seat-map-legend-container {
+    display: none;
+  }
+
+  .cb-seats-container--vertical {
+    transform: none;
+  }
+
+  .seat-map-container {
+    // spacing at bottom of aircraft to account for
+    // action bar so no seats are behind it
+    margin-bottom: 208px;
+    transform: none;
+  }
+}
+
+.rotate-svg {
+  transform: rotate(-90deg) scale(1.42) translateY(17px);
+}
+
+.form-control {
+  display: block;
+  margin-bottom: 16px;
+
+  label,
+  input {
+    display: block;
+  }
+
+  input {
+    box-sizing: border-box;
+    padding: 8px;
+    width: 100%;
+  }
+}
+
+.justify-items-center {
+  justify-items: center;
+}
+
+.stacked-elements-container {
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 100%;
+}
+
+.stacked-elements-container-mini {
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 100%;
+  height: 150px;
+  background-color: jb-colors.$sky-blue;
+  border-radius: 0.375rem;
+}
+
+.stacked-child {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.dd-panel {
+  box-shadow: 0 0 10px 0 rgba(0, 32, 91, 0.15);
+
+  @media #{jb-vars.$breakpoint-small} {
+    align-items: center;
+    height: 3.25rem;
+    padding-bottom: 0;
+  }
+}
+
+/* flight container box shadow added */
+.flight-container {
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
+}
+/* flight details line height and letetr spacing added */
+.flight-detail {
+  line-height: 1rem;
+  letter-spacing: -0.3px;
+}
+/* select container width added  */
+.select-container {
+  width: 250px;
+}
+/* restrict click */
+.restrict-action {
+  pointer-events: none;
+}
+/* media query for small screens */
+@media #{jb-vars.$breakpoint-small} {
+  /* flight-select.simple-select max width added */
+  .flight-select.simple-select {
+    max-width: 10rem !important;
+  }
+}
+/*** media query for 200% zoom  accessibility ***/
+@media only screen and (min-device-width: 1280px) and (max-device-width: 1440px) {
+  .accessibility {
+    .fr.mv2,
+    .mv2.select-container {
+      margin: 0.1rem 0;
+    }
+  }
+}
+
+/* Preview mode styles - responsive container fitting */
+.cb-seat-map-preview-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cb-seat-map-preview-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.cb-seat-map-preview-map-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 100%;
+  overflow: hidden;
+
+  .stacked-child {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+}
+
+.aircraft-image--preview {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.cb-seats-container--preview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .cb-seats--preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

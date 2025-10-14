@@ -1,0 +1,5 @@
+{
+  // Prefer the TypeScript version installed and utilized by the project instead
+  // of VSCode's default TypeScript version
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

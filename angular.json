@@ -1,0 +1,113 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "cb-seat-map": {
+      "projectType": "library",
+      "root": "projects/cb-seat-map",
+      "sourceRoot": "projects/cb-seat-map/src",
+      "prefix": "cb",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/cb-seat-map/ng-package.json",
+            "tsConfig": "projects/cb-seat-map/tsconfig.lib.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/cb-seat-map/ng-package.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "test.ts",
+            "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "tsConfig": "projects/cb-seat-map/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "cb-seat-map-demo": {
+      "projectType": "application",
+      "root": "projects/cb-seat-map-demo",
+      "sourceRoot": "projects/cb-seat-map-demo/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/cb-seat-map-demo",
+            "index": "projects/cb-seat-map-demo/src/index.html",
+            "main": "projects/cb-seat-map-demo/src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "projects/cb-seat-map-demo/tsconfig.app.json",
+            "assets": ["projects/cb-seat-map-demo/src/assets"],
+            "styles": ["projects/cb-seat-map-demo/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "cb-seat-map-demo:build:production"
+            },
+            "development": {
+              "browserTarget": "cb-seat-map-demo:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "test.ts",
+            "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "projects/cb-seat-map-demo/tsconfig.spec.json",
+            "assets": ["projects/cb-seat-map-demo/src/favicon.ico"],
+            "styles": ["projects/cb-seat-map-demo/src/styles.scss"],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}

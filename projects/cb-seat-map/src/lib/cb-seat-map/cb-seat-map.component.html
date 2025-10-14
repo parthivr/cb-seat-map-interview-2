@@ -1,0 +1,27 @@
+<div class="cb-seat-map">
+  <cb-seat-map-preview-legend
+    *ngIf="shouldShowPreviewLegend && previewBool"
+    [seatMap]="data"
+  />
+
+  <div
+    class="cb-seat-map__section-wrapper"
+    [ngClass]="{
+      'cb-seat-map__section-wrapper--preview': previewBool && !selectionBool,
+      'cb-seat-map__section-wrapper--selection': selectionBool
+    }"
+  >
+    <cb-seat-map-section
+      [img]="img"
+      [legend]="legendBool"
+      [preview]="previewBool"
+      [rotation]="rotation"
+      [seatData]="seatSelectedData ?? data"
+      (selectedSeatsArrEmit)="getSelectedSeatsArr($event)"
+      [selection]="selectionBool"
+      [shouldDownscalePreview]="shouldDownscalePreview"
+      [svgheight]="svgheight"
+      [svgwidth]="svgwidth"
+    />
+  </div>
+</div>

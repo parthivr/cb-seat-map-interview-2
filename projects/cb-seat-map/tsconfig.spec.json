@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.spec.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc/spec",
+    "types": ["jasmine", "node"],
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
+}

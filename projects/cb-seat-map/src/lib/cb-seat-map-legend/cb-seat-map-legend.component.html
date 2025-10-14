@@ -1,0 +1,199 @@
+<div class="seat-type detail scroll-bar">
+  <div
+    class="mt3 fixed relative-l w-100 w-auto-l bottom-0 pa4-m seat-type-detail-wrapper"
+    tabindex="0"
+  >
+    <cb-seat-map-heads-up-panel
+      *ngIf="headsUpMessage"
+      [headsUpMessage]="headsUpMessage"
+      [content]="cmsHeadsUpPage?.edgeCases"
+    ></cb-seat-map-heads-up-panel>
+    <jb-accordion class="seat-type-accordion">
+      <jb-expansion-panel
+        *ngIf="isMint"
+        class="bg-white br3 mb2 mint-expansion-panel"
+        [isPrimary]="false"
+      >
+        <jb-expansion-panel-header
+          [isPrimary]="false"
+          [iconSize]="JbEnums.JbChevronIconSizeEnum.compact"
+        >
+          <jb-expansion-panel-header-collapsed-only-content>
+            <h4 class="f3 DINPro-Regular core-blue">Mint</h4>
+            <div class="mt2">
+              <span class="lh-title klarheit cod-gray s-body normal">
+                {{ cmsMint.mintTripNotice3NS }}
+              </span>
+            </div>
+          </jb-expansion-panel-header-collapsed-only-content>
+        </jb-expansion-panel-header>
+        <jb-expansion-panel-row [isPrimary]="false">
+          <div class="flex flex-column flex-row-ns justify-around">
+            <div
+              class="w-50"
+              *ngFor="
+                let text of cmsMint.mintSeatRecommendationCard;
+                trackBy: trackByCmsData
+              "
+            >
+              <div class="pv3 bg-white charcoal mr2">
+                <span class="s-body">{{ text.description }}</span>
+              </div>
+            </div>
+          </div>
+        </jb-expansion-panel-row>
+      </jb-expansion-panel>
+
+      <jb-expansion-panel
+        class="bg-white br3 mb2 ems-expansion-panel"
+        [isPrimary]="false"
+      >
+        <jb-expansion-panel-header
+          [isPrimary]="false"
+          [iconSize]="JbEnums.JbChevronIconSizeEnum.compact"
+        >
+          <jb-expansion-panel-header-collapsed-only-content>
+            <h4 class="f3 DINPro-Regular core-blue">EvenMore®</h4>
+            <div class="mt2">
+              <span class="lh-title klarheit cod-gray s-body normal">
+                {{ cmsEvenMore?.emBenefitDetail }}
+              </span>
+              <span
+                class="ml2 1h-solid royal-blue pointer s-body normal"
+                tabindex="0"
+                (click)="openLearnMorePanel(labels.EM)"
+                (keypress)="handleKeyPressEvent($event, labels.EM)"
+              >
+                {{ cmsCommonText?.learnMore }}
+              </span>
+            </div>
+          </jb-expansion-panel-header-collapsed-only-content>
+        </jb-expansion-panel-header>
+        <jb-expansion-panel-row [isPrimary]="false">
+          <div class="flex flex-column flex-row-ns">
+            <div class="flex flex-column w-100 justify-between">
+              <div>
+                <div class="flex justify-around">
+                  <div class="w-50">
+                    <div class="pv3 bg-white charcoal mr3">
+                      <div class="mb1 ems-image">
+                        <jb-seat
+                          [type]="JbEnums.JbSeatType.evenMore"
+                          [state]="JbEnums.JbSeatState.available"
+                          class="ems-seats fl mr2"
+                          [interactive]="false"
+                        ></jb-seat>
+                        <!-- <img [src]="cmsContent?.emsPlus?.emsImage" alt="ems-img" /> -->
+                      </div>
+                      <h3 class="br4 mt3 pl0 bg-white s-body charcoal klarheit">
+                        <span>{{ cmsCommonText?.evenMoreSpaceText }}</span>
+                      </h3>
+                      <h3 class="br4 mt3 pl0 bg-white s-body charcoal klarheit">
+                        <span>{{ cmsEvenMore?.emDetailLevel1 }}</span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="w-50">
+                    <div class="pv3 bg-white charcoal mr2">
+                      <div class="mb1 ems-image">
+                        <jb-seat type="emsPlus" state="available" class="ems-seats fl mr2" [interactive]="false"></jb-seat>
+                        <img class="mt2" [src]="cmsContent?.emsPlus?.emsPlusImage" alt="ems-plus-img" />
+                      </div>
+                      <h3 class="br4 mt3 pl0 bg-white s-body charcoal klarheit">
+                        <span>{{ cmsContent?.emsPlus?.emsPlusTitleHeader }}</span>
+                      </h3>
+                      <span class="lh-title">{{ cmsContent?.emsPlus?.addOnEMSPlusDescription }}</span>
+                      <div class="tl slate-gray pv2"> {{ cmsContent?.content?.fromText }} +
+                        <span class="charcoal body fw6 ">{{emsPlusPrice | currency: currencyType:'symbol':'1.0-0'}}</span>
+                      </div>
+                    </div>
+                  </div> -->
+              </div>
+            </div>
+          </div>
+        </jb-expansion-panel-row>
+      </jb-expansion-panel>
+
+      <jb-expansion-panel
+        class="bg-white mb2 br3 core-expansion-panel"
+        [isPrimary]="false"
+      >
+        <jb-expansion-panel-header
+          [isPrimary]="false"
+          [iconSize]="JbEnums.JbChevronIconSizeEnum.compact"
+        >
+          <jb-expansion-panel-header-collapsed-only-content>
+            <h4 class="f3 DINPro-Regular core-blue">The JetBlue Experience</h4>
+            <div class="mt2">
+              <span class="lh-title klarheit cod-gray s-body normal">
+                {{ cmsEvenMore?.jetBlueExperDetail }}
+              </span>
+              <span
+                class="ml2 1h-solid royal-blue pointer s-body normal"
+                tabindex="0"
+                (click)="openLearnMorePanel(labels.CORE)"
+                (keypress)="handleKeyPressEvent($event, labels.CORE)"
+              >
+                {{ cmsCommonText?.learnMore }}
+              </span>
+            </div>
+          </jb-expansion-panel-header-collapsed-only-content>
+        </jb-expansion-panel-header>
+        <jb-expansion-panel-row [isPrimary]="false">
+          <div class="flex flex-column flex-row-ns">
+            <div class="flex flex-column w-100 justify-between">
+              <div>
+                <div class="w-100 flex">
+                  <div class="pt2 bg-white charcoal mr3">
+                    <div class="mb1 core-icon">
+                      <jb-seat
+                        [type]="JbEnums.JbSeatType.core"
+                        [state]="JbEnums.JbSeatState.available"
+                        class="core-seats fl"
+                        [interactive]="false"
+                      ></jb-seat>
+                    </div>
+                    <h3 class="br4 mt2 pl0 bg-white s-body charcoal klarheit">
+                      <span>{{ cmsCommonText?.coreText }}</span>
+                    </h3>
+                  </div>
+                </div>
+                <ng-container>
+                  <h4 class="f3 DINPro-Regular core-blue mt5">
+                    {{ cmsCommonText?.corePreferredText }}
+                  </h4>
+                  <div class="mt2 pb3">
+                    <div class="lh-title klarheit cod-gray s-body normal">
+                      {{ cmsEms?.locationText }}
+                    </div>
+                    <div class="lh-title klarheit cod-gray s-body normal">
+                      {{ cmsEms?.preferredBenefitDetail }}
+                    </div>
+                  </div>
+                  <div class="w-100 flex">
+                    <div class="pt2 bg-white charcoal mr3">
+                      <div class="mb1 core-pref-icon">
+                        <jb-seat
+                          [type]="JbEnums.JbSeatType.preferred"
+                          [state]="JbEnums.JbSeatState.available"
+                          class="preferred-seats fl"
+                          [interactive]="false"
+                        ></jb-seat>
+                      </div>
+                      <h3 class="br4 mt2 pl0 bg-white s-body charcoal klarheit">
+                        <span>
+                          {{ cmsCommonText?.corePreferredText }}
+                        </span>
+                      </h3>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </jb-expansion-panel-row>
+      </jb-expansion-panel>
+    </jb-accordion>
+  </div>
+</div>

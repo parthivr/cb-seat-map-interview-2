@@ -1,0 +1,33 @@
+<div tabindex="0" *ngIf="isShow">
+  <div class="br3 pa3 mt3 bg-white mb3 bl-">
+    <div class="flex">
+      <img
+        src="{{ headsUpIcon }}"
+        alt="heads-up-icon"
+        width="80px"
+        height="80px"
+      />
+      <div class="pv2 pl3">
+        <div class="pb2 fw6">
+          <span> {{ message?.title }} </span>
+        </div>
+        <div>
+          <span [innerHTML]="message?.description"></span>
+        </div>
+      </div>
+      <div *ngIf="showCloseButton">
+        <button
+          jbButton
+          tabindex="0"
+          type="button"
+          [size]="JbEnums.JbButtonSizeEnum?.small"
+          [theme]="JbEnums.JbButtonTypeEnum?.minimal"
+          (keyup.enter)="closeModal()"
+          (click)="closeModal()"
+        >
+          <jb-icon name="removeElementLarge"></jb-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

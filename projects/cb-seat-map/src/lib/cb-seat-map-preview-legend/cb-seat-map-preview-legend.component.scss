@@ -1,0 +1,35 @@
+@use 'jb-component-library/styles/colors-variables' as colors;
+@use '../internal/mixins' as mixins;
+
+.cb-seat-map-preview-legend {
+  @include mixins.flex($gap: 1rem, $wrap: wrap);
+  @include mixins.padding($horizontal: 1rem, $vertical: 0.5rem);
+
+  background-color: colors.$off-white;
+  min-height: 2.25rem;
+
+  &__item {
+    @include mixins.flex($align-items: center, $gap: 0.5rem);
+
+    &:not(:last-child) {
+      padding-right: 0.5rem;
+    }
+  }
+
+  &__list {
+    // Let list items participate directly in the section's flex layout
+    display: contents;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__seat-icon {
+    // TODO: Figure out how to scale down the `jb-seat` svg without using
+    // `::ng-deep`
+    ::ng-deep svg {
+      height: 1.5rem !important;
+      width: auto !important;
+    }
+  }
+}

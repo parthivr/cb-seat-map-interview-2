@@ -1,0 +1,82 @@
+@use 'jb-component-library/styles/colors-variables.scss' as jb-colors;
+@use 'jb-component-library/styles/variables.scss' as jb-vars;
+
+/* view seat button height and width */
+.view-seat-button {
+  height: 48px;
+  width: 212px;
+}
+/* font color for text */
+.cod-gray {
+  color: jb-colors.$charcoal;
+}
+/* border color for mint panel */
+.mint-expansion-panel {
+  box-sizing: border-box;
+  border-left: jb-colors.$mint-green 0.375rem solid;
+}
+/* border color for ems panel */
+.ems-expansion-panel {
+  box-sizing: border-box;
+  border-left: jb-colors.$orange 0.375rem solid;
+}
+/* border color for core panel */
+.core-expansion-panel {
+  box-sizing: border-box;
+  border-left: jb-colors.$core-blue 0.375rem solid;
+}
+/* core icon height style */
+.core-icon {
+  min-height: 42px;
+}
+/* core icon height style */
+.core-pref-icon {
+  min-height: 42px;
+}
+/* add seat type accordion padding */
+.seat-type-accordion {
+  padding: 0 !important;
+}
+/* adding scroll property to seat type detail overflow */
+.scroll-bar {
+  max-height: calc(100vh - 226px);
+  padding-right: 0.5rem;
+  overflow-y: auto;
+}
+
+/* media query for large screen */
+@media #{jb-vars.$breakpoint-large} {
+  /* padding for large screens */
+  .padding-large {
+    margin-right: 100px;
+  }
+  /* width for tabs of EMS plus learn more */
+  jb-tabs.ems-tabs {
+    width: 370px !important;
+  }
+}
+/* media query for medium screen */
+@media #{jb-vars.$breakpoint-medium} {
+  /* Seat type wrapper width */
+  .seat-type-detail-wrapper {
+    width: 95%;
+  }
+}
+/* media query for small screen */
+@media #{jb-vars.$breakpoint-small} {
+  /* width for seat type wrapper */
+  .seat-type-detail-wrapper {
+    width: 95%;
+  }
+}
+/* border set up for non-mobile screen */
+@media #{jb-vars.$breakpoint-not-small} {
+  /* Shadow style  */
+  .corner-shadow {
+    box-shadow: 0.5px 0.5px 4px jb-colors.$light-gray;
+  }
+  /* button radius style */
+  .button-radius {
+    border-radius: 25px 25px;
+  }
+}

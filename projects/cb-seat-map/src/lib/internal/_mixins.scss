@@ -1,0 +1,199 @@
+@use 'jb-component-library/styles/variables' as vars;
+
+// A customizable `flex` mixin to easily define compatible flex properties in
+// one line.
+//
+// Automatically sets `display: flex` if `display` isnot specified.
+//
+// e.g.) @include mixins.flex($direction: column, $gap: small)
+@mixin flex(
+  $display: flex,
+  $align-content: null,
+  $align-items: null,
+  $align-self: null,
+  $basis: null,
+  $column-gap: null,
+  $direction: null,
+  $flex: null,
+  $flow: null,
+  $gap: null,
+  $grow: null,
+  $justify-content: null,
+  $row-gap: null,
+  $shrink: null,
+  $wrap: null
+) {
+  display: $display;
+
+  @if $align-content != null {
+    align-content: $align-content;
+  }
+
+  @if $align-items != null {
+    align-items: $align-items;
+  }
+
+  @if $align-self != null {
+    align-self: $align-self;
+  }
+
+  @if $basis != null {
+    flex-basis: $basis;
+  }
+
+  @if $column-gap != null {
+    column-gap: $column-gap;
+  }
+
+  @if $direction != null {
+    flex-direction: $direction;
+  }
+
+  @if $flex != null {
+    flex: $flex;
+  }
+
+  @if $flow != null {
+    flex-flow: $flow;
+  }
+
+  @if $gap != null {
+    gap: $gap;
+  }
+
+  @if $grow != null {
+    flex-grow: $grow;
+  }
+
+  @if $justify-content != null {
+    justify-content: $justify-content;
+  }
+
+  @if $row-gap != null {
+    row-gap: $row-gap;
+  }
+
+  @if $shrink != null {
+    flex-shrink: $shrink;
+  }
+
+  @if $wrap != null {
+    flex-wrap: $wrap;
+  }
+}
+
+// A customizable `padding` mixin to easily define compatible padding
+// properties in one line.
+//
+// e.g.) @include mixins.padding($horizontal: 1rem);
+//       @include mixins.padding($top: 8px)
+@mixin padding(
+  $bottom: null,
+  $horizontal: null,
+  $left: null,
+  $right: null,
+  $top: null,
+  $vertical: null
+) {
+  @include spacing(
+    $bottom: $bottom,
+    $horizontal: $horizontal,
+    $left: $left,
+    $property: padding,
+    $right: $right,
+    $top: $top,
+    $vertical: $vertical
+  );
+}
+
+// A customizable `margin` mixin to easily define compatible margin
+// properties in one line.
+//
+// e.g.) @include mixins.margin($horizontal: 1rem);
+//       @include mixins.margin($top: 8px)
+@mixin margin(
+  $bottom: null,
+  $horizontal: null,
+  $left: null,
+  $right: null,
+  $top: null,
+  $vertical: null
+) {
+  @include spacing(
+    $bottom: $bottom,
+    $horizontal: $horizontal,
+    $left: $left,
+    $property: margin,
+    $right: $right,
+    $top: $top,
+    $vertical: $vertical
+  );
+}
+
+// Helper functions
+
+// Returns a map of resolved side values given specific and axis shorthands.
+// Precedence: specific side > axis shorthand.
+//
+// e.g.) spacing-sides($vertical: 1rem, $top: 2rem) returns the map
+// (top: 2rem, right: 1rem, bottom: 1rem, left: null)
+@function spacing-sides(
+  $bottom: null,
+  $horizontal: null,
+  $left: null,
+  $right: null,
+  $top: null,
+  $vertical: null
+) {
+  $resolved-bottom: if($bottom != null, $bottom, $vertical);
+  $resolved-left: if($left != null, $left, $horizontal);
+  $resolved-right: if($right != null, $right, $horizontal);
+  $resolved-top: if($top != null, $top, $vertical);
+
+  @return (
+    bottom: $resolved-bottom,
+    left: $resolved-left,
+    right: $resolved-right,
+    top: $resolved-top
+  );
+}
+
+// Generic spacing mixin: emits non-null side declarations for a given property
+// prefix like `margin` or `padding`.
+//
+// e.g.) @include spacing($property: padding, $horizontal: 1rem);
+//       @include spacing($property: margin, $top: 8px)
+@mixin spacing(
+  $property,
+  $bottom: null,
+  $horizontal: null,
+  $left: null,
+  $right: null,
+  $top: null,
+  $vertical: null
+) {
+  $sides: spacing-sides(
+    $bottom: $bottom,
+    $horizontal: $horizontal,
+    $left: $left,
+    $right: $right,
+    $top: $top,
+    $vertical: $vertical,
+  );
+
+  @if map-get($sides, bottom) != null {
+    #{$property}-bottom: map-get($sides, bottom);
+  }
+
+  @if map-get($sides, left) != null {
+    #{$property}-left: map-get($sides, left);
+  }
+
+  @if map-get($sides, right) != null {
+    #{$property}-right: map-get($sides, right);
+  }
+
+  @if map-get($sides, top) != null {
+    #{$property}-top: map-get($sides, top);
+  }
+}

@@ -1,0 +1,85 @@
+@use 'jb-component-library/styles/colors-variables.scss' as jb-colors;
+@use 'jb-component-library/styles/variables.scss' as jb-vars;
+
+@keyframes slideInLeft {
+  from {
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* pop up button background color and height , width */
+.pop-on-button {
+  background-color: #d7ecf7;
+  height: 32px;
+  width: 122px;
+  border-radius: 10px 0 10px 0;
+}
+/* ul list style css */
+ul {
+  list-style: none;
+  /* list bottom padding added */
+  li {
+    padding-bottom: 0.5rem;
+  }
+}
+/* To add scroll for  learn more panel */
+jb-drawer-body.learn-more-container {
+  overflow-y: scroll !important;
+}
+
+::ng-deep .learn-more-drawer section.drawer-panel {
+  animation: slideInLeft 0.5s linear !important;
+
+  // Offset the toolbar height since this is a fixed position element
+  top: 3.5rem !important;
+}
+
+::ng-deep .learn-more-drawer .bg-black-60 {
+  background: none !important;
+}
+
+/* media query for large screen */
+@media #{jb-vars.$breakpoint-large} {
+  /* direction added for learn more container */
+  jb-drawer-body.learn-more-container {
+    direction: rtl;
+  }
+  /* direction added for  learn more */
+  .learn-more-wrapper {
+    direction: ltr;
+  }
+  /* maximum width for ems learn-more */
+  .maximum-width {
+    max-width: 435px !important;
+    padding-right: 10px;
+  }
+  /* tab image width and height */
+  .tab-image {
+    width: 435px;
+    height: 220px;
+    padding-right: 0.2rem;
+  }
+  /* width for tabs of EMS plus learn more */
+  jb-tabs.ems-tabs {
+    width: 370px !important;
+  }
+}
+/* media query for small screen */
+@media #{jb-vars.$breakpoint-small} {
+  /* tab image width and height */
+  .maximum-width .tab-image {
+    width: 100%;
+  }
+  /* EMS plus tabs width */
+  jb-tabs.ems-tabs {
+    width: 350px !important;
+  }
+  /* margin top style on learn more section */
+  .learn-more-drawer jb-drawer-header {
+    margin-top: 1rem !important;
+  }
+}

@@ -1,0 +1,147 @@
+<div
+  *ngIf="travelers"
+  class="w-100 traveller-panel bg-white page-margin-m page-margin-s flex justify-center center pt4-ns fixed bottom-0 left-0"
+>
+  <div class="jb-max-width w-100 flex-ns">
+    <div class="traveler-bar">
+      <jb-horizontal-scroller #scroller class="mr10-l mr5">
+        <ng-container
+          *ngFor="let traveler of travelers; trackBy: trackByTravelerId"
+        >
+          <jb-avatar-card
+            scrollItem
+            *ngIf="
+              traveler.extendedType != 'EXTRA_SEAT' &&
+              traveler.extendedType != 'EXTRA_SEAT_MUS_INST'
+            "
+            class="mv2 mr3 dib scrolled-avatar"
+            [seatType]="JbEnums.JbSeatType.mintStudio"
+            [isActive]="traveler.isActive"
+            (click)="setActiveTravelerFunc(traveler)"
+          >
+            <jb-avatar
+              class="fs-exclude"
+              [initials]="traveler.initials"
+            ></jb-avatar>
+            <jb-avatar-card-name class="pr3 fs-exclude">
+              {{ traveler.name.first }}
+            </jb-avatar-card-name>
+            <jb-avatar-card-seat>
+              {{ showSelectedSeatCard(traveler) }}
+            </jb-avatar-card-seat>
+          </jb-avatar-card>
+          <jb-avatar-card
+            *ngIf="
+              traveler.extendedType == 'EXTRA_SEAT' ||
+              traveler.extendedType == 'EXTRA_SEAT_MUS_INST'
+            "
+            class="mv2 mr3 dib scrolled-avatar"
+            [seatType]="JbEnums.JbSeatType.mintStudio"
+            [isActive]="traveler.isActive"
+            (click)="setActiveTravelerFunc(traveler)"
+          >
+            <jb-avatar
+              class="fs-exclude"
+              [initials]="extraSeatInfo.initials"
+            ></jb-avatar>
+            <jb-avatar-card-name class="pr3 fs-exclude">
+              {{ extraSeatInfo.name }} ext
+            </jb-avatar-card-name>
+            <jb-avatar-card-seat>
+              {{ showSelectedSeatCard(traveler) }}
+            </jb-avatar-card-seat>
+          </jb-avatar-card>
+        </ng-container>
+      </jb-horizontal-scroller>
+    </div>
+    <div class="traveler-bar-button-container">
+      <button
+        *ngIf="legIndex > 0"
+        jbButton
+        (click)="iteratePrevLegFunc()"
+        [theme]="JbEnums.JbButtonTypeEnum.standard"
+        [size]="JbEnums.JbButtonSizeEnum.medium"
+        type="button"
+      >
+        <ng-container
+          *ngTemplateOutlet="
+            navigationButton;
+            context: {
+              navigationDirection: 'previous',
+              text: 'Previous flight'
+            }
+          "
+        />
+      </button>
+      <button
+        *ngIf="legIndex < seatData.data.length - 1"
+        jbButton
+        (click)="iterateTravOrLegFunc()"
+        [theme]="JbEnums.JbButtonTypeEnum.ctaPrimary"
+        type="button"
+      >
+        <ng-container
+          *ngTemplateOutlet="
+            navigationButton;
+            context: {
+              navigationDirection: 'next',
+              text:
+                buttonText +
+                ': ' +
+                legs[legIndex + 1].origin +
+                ' – ' +
+                legs[legIndex + 1].destination
+            }
+          "
+        />
+      </button>
+      <button
+        *ngIf="legIndex === seatData.data.length - 1"
+        jbButton
+        (click)="submitFunc()"
+        [theme]="JbEnums.JbButtonTypeEnum.ctaPrimary"
+        [size]="JbEnums.JbButtonSizeEnum.medium"
+        type="button"
+      >
+        <ng-container
+          *ngTemplateOutlet="
+            navigationButton;
+            context: {
+              navigationDirection: 'next',
+              text: 'Next: Select extras'
+            }
+          "
+        />
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template
+  #navigationButton
+  let-navigationDirection="navigationDirection"
+  let-text="text"
+>
+  <div class="traveler-bar-button-content">
+    <ng-container *ngIf="navigationDirection === 'previous'">
+      <jb-icon
+        height="0.9rem"
+        jbPrefix
+        name="bookChevronLeft"
+        viewBox="8 6 8 12"
+        width="0.5rem"
+      />
+      <span>{{ text }}</span>
+    </ng-container>
+
+    <ng-container *ngIf="navigationDirection === 'next'">
+      <span>{{ text }}</span>
+      <jb-icon
+        height="0.9rem"
+        name="bookChevronRight"
+        viewBox="8 6 8 12"
+        width="0.5rem"
+      />
+    </ng-container>
+  </div>
+</ng-template>

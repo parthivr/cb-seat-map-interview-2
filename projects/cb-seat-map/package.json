@@ -1,0 +1,27 @@
+{
+  "name": "cb-seat-map",
+  "version": "0.0.26",
+  "peerDependencies": {
+    "@angular/common": "^16.2.12",
+    "@angular/core": "^16.2.12",
+    "@angular/elements": "^16.2.12",
+    "@angular/forms": "^16.2.12",
+    "@angular/platform-browser": "^16.2.12",
+    "@angular/platform-browser-dynamic": "^16.2.12",
+    "date-fns": "^2.28.0",
+    "jb-component-library": "^29.0.0",
+    "ramda": "^0.26.0",
+    "rxjs": "^7.5.0",
+    "zone.js": "^0.13.1"
+  },
+  "dependencies": {
+    "tslib": "^2.8.1"
+  },
+  "ng-package": {
+    "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+    "dest": "../../dist/cb-seat-map",
+    "lib": {
+      "entryFile": "src/public-api.ts"
+    }
+  }
+}

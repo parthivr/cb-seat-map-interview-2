@@ -1,0 +1,22 @@
+<section aria-label="Seat map legend" class="cb-seat-map-preview-legend">
+  <ul class="cb-seat-map-preview-legend__list" role="list">
+    <li
+      *ngFor="
+        let seatLegendConfig of availableSeatLegendConfigs;
+        trackBy: trackByJbSeatType
+      "
+      class="cb-seat-map-preview-legend__item"
+    >
+      <jb-seat
+        aria-hidden="true"
+        class="cb-seat-map-preview-legend__seat-icon"
+        [interactive]="false"
+        [state]="AVAILABLE_JB_SEAT_STATE"
+        [type]="seatLegendConfig.jbSeatType"
+      />
+      <span class="s-body">
+        {{ seatLegendConfig.label }}
+      </span>
+    </li>
+  </ul>
+</section>

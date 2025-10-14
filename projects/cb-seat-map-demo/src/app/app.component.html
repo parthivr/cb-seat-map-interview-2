@@ -1,0 +1,46 @@
+<jb-toolbar class="cb-seat-map-demo__toolbar">
+  <div class="cb-seat-map-demo__toolbar-content">
+    <button
+      class="cb-seat-map-demo__toolbar-title-button"
+      (click)="jbConfettiDirective.confetti()"
+      jbButton
+      jbConfetti
+      [size]="JbEnums.JbButtonSizeEnum.large"
+      [theme]="JbEnums.JbButtonTypeEnum.darkMinimal"
+    >
+      <div class="cb-seat-map-demo__toolbar-title-button-content">
+        <jb-icon
+          iconSourceUrl="assets/seat-map-white-circle.svg"
+          height="1.5rem"
+          width="1.5rem"
+        />
+
+        <span class="cb-seat-map-demo__toolbar-title-button-content-text">
+          CB Seat Map Demo
+        </span>
+      </div>
+    </button>
+
+    <span>v{{ cbSeatMapVersion }}</span>
+  </div>
+</jb-toolbar>
+
+<div
+  [ngClass]="{
+    'cb-seat-map-demo__seat-map': !isPreviewMode,
+    'cb-seat-map-demo__seat-map--preview': isPreviewMode,
+  }"
+>
+  <cb-seat-map
+    [data]="seatSelectedData ? null : seatData"
+    img="AirbusA320.svg"
+    svgwidth="600px"
+    svgheight="600px"
+    rotation="vertical"
+    [preview]="isPreviewMode"
+    [seatSelectedData]="seatSelectedData ?? null"
+    [selection]="!isPreviewMode"
+    [legend]="!isPreviewMode"
+    (selectedSeats)="onSelectedSeats($event)"
+  />
+</div>

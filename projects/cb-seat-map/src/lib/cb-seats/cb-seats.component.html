@@ -1,0 +1,214 @@
+<!-- <jb-seat
+  type="preferred"
+  state="available"
+  ariaLabel="Seat 11A / Available"
+  class="mr1"
+></jb-seat> -->
+<div
+  jbChangeDetect
+  class="seat-map dib"
+  *ngIf="seatMap"
+  [ngStyle]="{ '--seat-map-transform': transform ?? 'none' }"
+  [ngClass]="{ 'seat-map--downscale-preview': shouldDownscalePreview }"
+>
+  <div
+    *ngFor="
+      let cabin of seatMap?.cabins;
+      let cabinIndex = index;
+      trackBy: trackByCabinId
+    "
+  >
+    <div class="pt2 pb3" *ngIf="showEMSCabinDesc(cabin)">
+      <div class="tc charcoal s-body">
+        {{ cmsCommonText?.evenMore }}
+      </div>
+      <div class="tc">
+        <button
+          jbButton
+          [theme]="JbEnums.JbButtonTypeEnum?.minimal"
+          [isFull]="false"
+          class="royal-blue no-underline underline-hover pointer details-button"
+          tabindex="0"
+          (keyup.enter)="clickOnCabinDetailsLink(labels.EM)"
+          (click)="clickOnCabinDetailsLink(labels.EM)"
+        >
+          {{ cmsMint?.airbusDetailsText }}
+        </button>
+      </div>
+    </div>
+    <div class="mb2 flex justify-around charcoal ng-star-inserted">
+      <div *ngFor="let seat of cabin.rows[0].cols; trackBy: trackBySeatId">
+        {{ seat.label }}
+      </div>
+    </div>
+    <div
+      class="mb2 flex flex-nowrap justify-between items-center relative"
+      *ngFor="
+        let row of cabin.rows;
+        let rowIndex = index;
+        trackBy: trackByRowId
+      "
+    >
+      <div
+        class="pv2 absolute exit-text-left medium-gray bg-white exit-text-left"
+        *ngIf="showExitText(row)"
+      >
+        EXIT
+      </div>
+      <div class="center flex flex-nowrap items-center">
+        <ng-container
+          *ngFor="
+            let seat of row.cols | slice : 0 : row.aisleIndex + 1;
+            let colIndex = index;
+            trackBy: trackBySeatId
+          "
+        >
+          <ng-container
+            *ngTemplateOutlet="
+              seatView;
+              context: {
+                side: 'left',
+                row: row,
+                seat: seat,
+                colIndex: colIndex
+              }
+            "
+          ></ng-container>
+        </ng-container>
+      </div>
+      <div *ngIf="preview" class="dib aisle-space">&nbsp;</div>
+      <div *ngIf="!preview" class="s-body ph1 charcoal">{{ row.number }}</div>
+
+      <div class="center flex flex-nowrap items-center">
+        <ng-container
+          *ngFor="
+            let seat of row.cols | slice : row.aisleIndex + 1 : row.cols.length;
+            let colIndex = index;
+            trackBy: trackBySeatId
+          "
+        >
+          <ng-container
+            *ngTemplateOutlet="
+              seatView;
+              context: {
+                side: 'right',
+                row: row,
+                seat: seat,
+                colIndex: colIndex + 1 + row.aisleIndex
+              }
+            "
+          ></ng-container>
+        </ng-container>
+      </div>
+      <div
+        class="pv2 absolute exit-text-right medium-gray bg-white exit-text-right"
+        *ngIf="showExitText(row)"
+      >
+        EXIT
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template
+  #seatView
+  let-row="row"
+  let-seat="seat"
+  let-side="side"
+  let-colIndex="colIndex"
+>
+  <ng-container *ngIf="!isNoSeat(seat); else noSeat">
+    <ng-container
+      *ngTemplateOutlet="
+        row.mintRow ? mintSeat : nonMintSeat;
+        context: {
+          hidden: false,
+          seat,
+          row,
+          side,
+          colIndex
+        }
+      "
+    ></ng-container>
+  </ng-container>
+  <ng-template #noSeat>
+    <ng-container *ngIf="!row.mintRow">
+      <ng-container
+        *ngTemplateOutlet="
+          nonMintSeat;
+          context: { hidden: true, seat, row, colIndex }
+        "
+      ></ng-container>
+    </ng-container>
+  </ng-template>
+</ng-template>
+
+<ng-template
+  #mintSeat
+  let-row="row"
+  let-seat="seat"
+  let-side="side"
+  let-colIndex="colIndex"
+>
+  <jb-seat
+    class="mh2"
+    [type]="seat.displaySeatType"
+    [side]="side"
+    [state]="this.returnAvailable(seat)"
+    [id]="seat.seatInfo.split(' ').slice(0, 2).join('-')"
+    jbAnchor
+    [ariaLabel]="seat.seatInfo"
+    (click)="selectSeat(seat)"
+    [interactive]="!preview && selection"
+  >
+    <jb-seat-available-text *ngIf="selection && isValidCost(seat.cost)">
+      {{ formatSeatDisplayCost(seat) }}
+    </jb-seat-available-text>
+    <jb-seat-selected-text *ngIf="selection">
+      {{ seat.initials }}
+    </jb-seat-selected-text>
+  </jb-seat>
+</ng-template>
+
+<ng-template
+  #nonMintSeat
+  let-hidden="hidden"
+  let-row="row"
+  let-seat="seat"
+  let-colIndex="colIndex"
+>
+  <jb-seat
+    class="nonMintSeat"
+    [type]="seat.displaySeatType"
+    jbAnchor
+    [state]="this.returnAvailable(seat)"
+    [ariaLabel]="seat.seatInfo"
+    [id]="seat.seatInfo.split(' ').slice(0, 2).join('-')"
+    (click)="selectSeat(seat)"
+    [interactive]="!preview && selection"
+  >
+    <jb-seat-available-text *ngIf="selection">
+      {{ formatSeatDisplayCost(seat) }}
+    </jb-seat-available-text>
+    <jb-seat-selected-text *ngIf="selection">
+      {{ seat.initials }}
+    </jb-seat-selected-text>
+  </jb-seat>
+</ng-template>
+
+<!-- <jb-popover #popover>
+  <jb-seat-pop-over
+    [seat]="emitSeat"
+    [pointsText]="cmsContent?.content?.pointsText"
+    [currencyType]="currencyType"
+    [isDesktop]="isDesktop"
+    [popOverContent]="cmsContent?.popupAttributes"
+    [showPoints]="showPoints"
+    tabindex="0"
+  ></jb-seat-pop-over>
+  <div class="flex justify-center mt3 w-100">
+    <button jbButton theme="standard" size="medium" (click)="selectSeat()">
+      {{ cmsContent?.content?.selectSeats }}
+    </button>
+  </div>
+</jb-popover> -->

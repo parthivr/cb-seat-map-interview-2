@@ -1,0 +1,121 @@
+@use 'jb-component-library/styles/variables' as jb-vars;
+
+.seat-map {
+  /*
+  aisle-space height width added
+  */
+  .aisle-space {
+    width: 24px;
+    height: 100%;
+  }
+  /*
+  margin added for non mint seat
+   */
+  .nonMintSeat {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+  /* restrict click for seats */
+  .restrict-action {
+    pointer-events: none;
+  }
+
+  transform: var(--seat-map-transform, none);
+
+  @media #{jb-vars.$breakpoint-small} {
+    transform: none;
+  }
+
+  // Downscale the preview for mobile when `shouldDownscalePreview` is true
+  // (specifically for the seat map preview on the checkout page)
+  &--downscale-preview {
+    @media #{jb-vars.$breakpoint-small} {
+      transform: var(--seat-map-transform, none);
+    }
+  }
+}
+
+.details-button {
+  background-color: transparent !important;
+  padding: 0 !important;
+  min-height: auto !important;
+  font-weight: normal !important;
+}
+
+.rotate-seat {
+  transform: rotate(90deg);
+}
+/* box shadow added for ems highlight */
+.ems-highlight {
+  box-shadow: 0 0 0 4px #ffe0bf;
+  border-radius: 10px;
+}
+/* box shadow added for core highlight */
+.core-highlight {
+  box-shadow: 0 0 0 4px #d9dee7;
+  border-radius: 10px;
+}
+
+/* exit text writing mode css added */
+.exit-text-left,
+.exit-text-right {
+  writing-mode: vertical-rl;
+}
+/* exit text border and left css added */
+.exit-text-left {
+  left: -12px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+/* exit text border and right css added */
+.exit-text-right {
+  right: -14px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+/* bottom added for two row exit */
+.two-row-exit {
+  bottom: -50%;
+}
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS styles go here */
+  .exit-text-left {
+    transform: rotate(-270deg);
+    left: -27px;
+    padding: 0 5px;
+    border-bottom-right-radius: 8px;
+  }
+  .exit-text-right {
+    transform: rotate(-270deg);
+    right: -29px;
+    padding: 0 5px;
+    border-bottom-right-radius: 8px;
+  }
+}
+
+.z--1 {
+  z-index: -1;
+}
+
+/* Preview mode styles */
+.cb-seats--preview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+
+  .seat-map {
+    transform-origin: center center !important;
+    display: flex !important; /* Override dib class */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    pointer-events: auto !important; /* Override mini-map pointer-events: none */
+
+    @media #{jb-vars.$breakpoint-small} {
+      transform: var(--seat-map-transform, none);
+    }
+  }
+}

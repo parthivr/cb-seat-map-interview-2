@@ -1,0 +1,8 @@
+# Test files
+**/__mocks__/**
+*.spec.ts
+coverage/
+
+# Development configs
+tsconfig.*.json
+karma.conf.js

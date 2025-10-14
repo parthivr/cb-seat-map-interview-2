@@ -1,0 +1,21 @@
+<jb-dialog
+  [dialogType]="dialogData?.dialogType"
+>
+  <jb-dialog-title jbFocus tabindex="-1">
+    {{ dialogData?.title }}
+  </jb-dialog-title>
+  <jb-dialog-content [innerHTML]="dialogData?.content"></jb-dialog-content>
+  <jb-dialog-actions>
+    <button
+      *ngIf="dialogData?.primaryButton"
+      jbButton
+      [theme]="JbEnums.JbButtonTypeEnum.ctaPrimary"
+      [id]="
+        !!dialogData?.id ? dialogData.id + '-accept' : 'notification-accept'
+      "
+      (click)="handleAcceptButton()"
+    >
+      {{ dialogData?.primaryButton }}
+    </button>
+  </jb-dialog-actions>
+</jb-dialog>

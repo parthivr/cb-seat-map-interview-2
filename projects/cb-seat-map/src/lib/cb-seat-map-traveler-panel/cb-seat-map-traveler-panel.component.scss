@@ -1,0 +1,95 @@
+/* import other style files that can be used for styling */
+@use 'jb-component-library/styles/variables.scss' as jb-vars;
+
+/* traveler bar width added */
+.traveler-bar {
+  width: 62%;
+}
+/* traveler bar button width added */
+.traveler-bar-button-container {
+  align-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
+
+  button .traveler-bar-button-content {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    font-size: 0.9rem;
+    gap: 0.3rem;
+    justify-content: center;
+  }
+}
+
+@media only #{jb-vars.$breakpoint-large} {
+  .traveler-bar-button-container {
+    align-self: center;
+    flex-wrap: nowrap;
+    height: fit-content;
+  }
+}
+
+/* Shadow added to traveler bar panel */
+.traveller-panel {
+  box-shadow: 0 0 10px 0 rgba(0, 32, 91, 0.15);
+}
+
+/* media query for medium screen or tablet screen */
+@media #{jb-vars.$breakpoint-medium} {
+  /* traveler bar width added */
+  .traveler-bar {
+    width: 73%;
+  }
+  /* traveler bar button width added */
+  .traveler-bar-button-container {
+    width: 27%;
+
+    & > button {
+      width: 100%;
+    }
+  }
+}
+/* media query for small screen or mobile screen */
+@media #{jb-vars.$breakpoint-small} {
+  /* traveler bar width added */
+  .traveler-bar,
+  .traveler-bar-button {
+    width: 100%;
+  }
+  /* traveler pannel padding added */
+  .traveller-panel {
+    padding-top: 1rem;
+    padding-bottom: max(1rem, env(safe-area-inset-bottom) + 12px);
+  }
+
+  .traveler-bar-button-container {
+    padding-left: 0;
+    width: 100%;
+  }
+}
+/* media query for 200% zoom  accessibility */
+@media only screen and (min-device-width: 1280px) and (max-device-width: 1440px) {
+  /* media query for 200% zoom  accessibility */
+  .accessibility {
+    &.traveller-panel {
+      padding: 0 1rem 0.5rem !important;
+      /* traveler button style on zoom */
+      .traveler-bar-button-container button {
+        margin-top: 0;
+        min-height: auto !important;
+        padding: 0.5rem !important;
+      }
+      /* traveler-bar style on zoom in */
+      .traveler-bar {
+        line-height: 0;
+      }
+    }
+    /* avatar on zoom */
+    jb-avatar.jb-avatar-medium {
+      height: 2rem;
+    }
+  }
+}

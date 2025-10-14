@@ -1,0 +1,102 @@
+<jb-drawer
+  #drawer
+  (afterClosed)="closeModal(labels.EM)"
+  [allowOutsideInteraction]="false"
+  class="learn-more-drawer"
+>
+  <jb-drawer-header></jb-drawer-header>
+  <jb-drawer-body class="overflow-auto">
+    <ng-container *ngTemplateOutlet="learnMoreContent"></ng-container>
+  </jb-drawer-body>
+</jb-drawer>
+
+<!-- Template for learn more content of EMS/Core-->
+<ng-template #learnMoreContent>
+  <div class="fr maximum-width ph4-ns" tabindex="0">
+    <div class="br3 bg-white s-body charcoal pa3 pl4-l pl2-m pr1-ns">
+      <div class="mb4">
+        <img
+          class="tab-image"
+          [src]="learnMoreDetails?.drawerHeaderImg"
+          [alt]="learnMoreDetails?.drawerAltImg"
+        />
+      </div>
+      <div class="fw6 mt2 flex justify-between items-center">
+        <div
+          class="pop-on-button br3 legal lh-solid flex justify-center items-center core-blue"
+          *ngIf="learnMorePanelDetails?.seatType === labels.EM"
+        >
+          <span>{{ cmsCommonText?.popularAddOnText }}</span>
+        </div>
+      </div>
+      <div>
+        <h2 class="core-blue mt3 m-heading">
+          {{ learnMoreDetails?.title }}
+        </h2>
+        <ng-container
+          *ngTemplateOutlet="
+            learnMoreList;
+            context: {
+              detail: learnMoreDetails?.detail,
+              list: learnMoreDetails?.list
+            }
+          "
+        ></ng-container>
+        <div
+          *ngIf="
+            learnMoreDetails.emDetail &&
+            this.learnMorePanelDetails?.seatType === this.labels.EM
+          "
+        >
+          <ng-container
+            *ngTemplateOutlet="
+              learnMoreList;
+              context: {
+                detail: learnMoreDetails?.emDetail,
+                list: learnMoreDetails?.emList
+              }
+            "
+          ></ng-container>
+        </div>
+      </div>
+      <div>
+        <div *ngIf="learnMorePanelDetails?.seatType === labels.EM">
+          <p
+            class="s-body"
+            *ngFor="
+              let note of cmsEvenMore?.benefitFootNotes;
+              trackBy: trackByFootNoteId
+            "
+          >
+            {{ note?.footNote }}
+          </p>
+        </div>
+        <div *ngIf="learnMorePanelDetails?.seatType === labels.CORE">
+          <p
+            class="s-body"
+            *ngFor="
+              let note of cmsEvenMore?.coreBenefitFootNotes;
+              trackBy: trackByFootNoteId
+            "
+          >
+            {{ note?.footNote }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #learnMoreList let-detail="detail" let-list="list">
+  <div class="mt3 pl1-m lh-title">
+    <div class="mb4">
+      {{ detail }}
+    </div>
+    <ul class="mt2 pl0">
+      <li *ngFor="let item of list; trackBy: trackByListItem">
+        <jb-icon name="checkmark"></jb-icon>
+        <span class="ml1" [innerHTML]="item"></span>
+      </li>
+    </ul>
+  </div>
+</ng-template>

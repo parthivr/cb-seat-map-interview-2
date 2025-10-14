@@ -1,0 +1,155 @@
+<!-- classes are currently just for preview map [name]="item.name"
+  [value]="item.value" -->
+
+<!-- Toolbar (displays leg dropdown and flight info) -->
+<div
+  *ngIf="!preview && !isLearnmorePanelOpened"
+  class="w-100 dd-panel bg-white page-margin-m page-margin-s flex justify-center center pt4-ns fixed left-0 pb3"
+  style="z-index: 100"
+>
+  <div class="jb-max-width w-100 flex justify-between">
+    <div class="col-6-ns col-12">
+      <div class="mv2 select-container">
+        <jb-select
+          *ngIf="legs.length >= 1"
+          [placeholder]="currentLeg.origin + ' to ' + currentLeg.destination"
+          [type]="JbEnums.JbChevronTypeEnum.simple"
+          [formControl]="ddControl"
+        >
+          <jb-select-option
+            *ngFor="let leg of legs; let i = index; trackBy: trackByLegId"
+            [name]="leg.origin + ' to ' + leg.destination"
+            [value]="i"
+          ></jb-select-option>
+        </jb-select>
+      </div>
+    </div>
+    <div class="col-6-ns col-12 flex items-center">
+      <span class="charcoal legal flight-detail">
+        Flight {{ currentLeg?.flightNumber }}
+      </span>
+      <!-- <span class="medium-gray mh2">|</span>
+        <span class="charcoal legal flight-detail">
+          {{ flightData[legIndex].duration | flightDurationSplitPipe }}
+        </span> -->
+    </div>
+  </div>
+</div>
+
+<!-- Main seat map container - different layout for preview vs normal mode -->
+<div
+  [ngClass]="
+    preview
+      ? 'cb-seat-map-preview-container'
+      : 'w-100 page-margin-m page-margin-s flex justify-center bg-lightest-blue'
+  "
+>
+  <div
+    [ngClass]="
+      preview ? 'cb-seat-map-preview-content' : 'jb-max-width w-100 flex-ns'
+    "
+  >
+    <div
+      *ngIf="legend && !preview"
+      class="cb-seat-map-legend-container sticky w-50 ie-fixed pt10"
+    >
+      <div class="relative 100vw flex justify-center ie-block">
+        <div class="jb-max-width page-margin center w-100">
+          <cb-seat-map-legend
+            [isMint]="isMint"
+            [isUMNR]="isUMNR"
+            [cmsCommonText]="seatSelectionCmsContent['selectSeat']"
+            [cmsEms]="seatSelectionCmsContent['even-more-space']"
+            [cmsEvenMore]="seatSelectionCmsContent['even-more']"
+            [cmsHeadsUpPage]="seatSelectionCmsContent['heads-up-page']"
+            [cmsMint]="seatSelectionCmsContent['mint']"
+            (modelEmit)="toggleLearnMorePanel($event)"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div
+      #imgContainer
+      [ngClass]="
+        preview
+          ? 'cb-seat-map-preview-map-container'
+          : rotation == 'horizontal'
+          ? 'w-100 overflow-hidden stacked-elements-container-mini justify-items-center items-center'
+          : 'w-50 seat-map-wrapper seat-map stacked-elements-container justify-items-center items-center overflow-hidden'
+      "
+    >
+      <img
+        *ngIf="!preview"
+        #acSvg
+        [src]="aircraftImageUrl"
+        [ngClass]="[
+          'aircraft-image',
+          'stacked-child',
+          preview ? 'aircraft-image--preview' : '',
+          rotation === 'vertical' ? 'dn db-ns' : '',
+          'aircraft-image--' + rotation
+        ]"
+        id="acSvg"
+      />
+      <div
+        class="cb-seats-container"
+        [ngClass]="[
+          preview
+            ? 'cb-seats-container--preview stacked-child'
+            : rotation === 'horizontal'
+            ? 'h-100 w-100 stacked-child'
+            : 'seat-map-container relative-m stacked-child ',
+          'cb-seats-container--' + rotation
+        ]"
+      >
+        <cb-seats
+          [ngClass]="{
+            'cb-seats--preview': preview,
+            'db': rotation === 'horizontal',
+            'relative db w-100 flex justify-center': rotation !== 'horizontal',
+          }"
+          *ngIf="seatMap"
+          [travelerData]="travelerData"
+          [preview]="preview"
+          [rotation]="rotation"
+          [seatMap]="seatMap"
+          [currentLeg]="currentLeg"
+          [selectedSeatsArr]="selectedSeatsArr"
+          [transform]="transformStr"
+          [selection]="selection"
+          [currentTraveler]="currentTraveler"
+          [cmsCommonText]="seatSelectionCmsContent['selectSeat']"
+          [cmsMint]="seatSelectionCmsContent['mint']"
+          (selectedSeat)="selectedSeat($event)"
+          (detailsEmitter)="toggleLearnMorePanel($event)"
+          [shouldDownscalePreview]="shouldDownscalePreview"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="travelerData && selection == true && !isLearnmorePanelOpened">
+  <cb-seat-map-traveler-panel
+    [travelers]="travelerData.travelers"
+    [legIndex]="legIndex"
+    [seatData]="seatData"
+    [buttonText]="buttonText"
+    [selectedSeatsArr]="selectedSeatsArr"
+    [currentLeg]="currentLeg"
+    [legs]="legs"
+    (iterateTravOrLeg)="iterateTravOrLeg()"
+    (setActiveTraveler)="setActiveTraveler($event)"
+    (iteratePrev)="iteratePrevLeg()"
+    (submitEvent)="submit()"
+  ></cb-seat-map-traveler-panel>
+</div>
+
+<cb-seat-map-learn-more-drawer
+  [cmsCommonText]="seatSelectionCmsContent['selectSeat']"
+  [cmsEms]="seatSelectionCmsContent['even-more-space']"
+  [cmsEvenMore]="seatSelectionCmsContent['even-more']"
+  [onLearnMorePanelClick]="onLearnMorePanelClick"
+  (modelEmit)="toggleLearnMorePanel($event)"
+></cb-seat-map-learn-more-drawer>
