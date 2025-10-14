@@ -54,6 +54,13 @@
         </ng-container>
       </jb-horizontal-scroller>
     </div>
+
+    <div>
+      <div *ngFor="let seatNum of getAllSelectedSeats()">
+        <span>{{ seatNum }}</span>
+      </div>
+    </div>
+
     <div class="traveler-bar-button-container">
       <button
         *ngIf="legIndex > 0"
