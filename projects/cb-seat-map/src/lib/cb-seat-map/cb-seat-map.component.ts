@@ -32,6 +32,8 @@ import type { CbSeatSelectionData } from './cb-seat-map.types';
   templateUrl: './cb-seat-map.component.html',
 })
 export class CbSeatMapComponent implements OnInit {
+  @Input() svgwidth: string = '500px';
+  @Input() svgheight: string = '500px';
   @Input() img: string = '';
   @Input() rotation: string = '';
 
@@ -88,6 +90,12 @@ export class CbSeatMapComponent implements OnInit {
       this.legendBool = true;
     } else {
       this.legendBool = false;
+    }
+
+    var svg = document.getElementById('acSvg');
+    if (svg && svg.style) {
+      svg.style.height = this.svgheight;
+      svg.style.width = this.svgwidth;
     }
   }
 
