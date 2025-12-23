@@ -109,6 +109,24 @@ export class CbSeatMapTravelerPanelComponent implements OnInit {
     });
   }
 
+  getAllSelectedSeats(): string[] {
+    const seatNumbers: string[] = [];
+    let i = 0;
+
+    while (i < this.selectedSeatsArr.length) {
+      const selectedSeat = this.selectedSeatsArr[i];
+      if (selectedSeat && selectedSeat.seat) {
+        seatNumbers.push(selectedSeat.seat.seatNum);
+      }
+      // Increment logic
+      if (selectedSeat.seat.seatNum) {
+        i++;
+      }
+    }
+    
+    return seatNumbers;
+  }
+
   ngOnInit(): void {
     log.debug('Received @Input `travelers`:', this.travelers);
     this.findExtraSeats();
